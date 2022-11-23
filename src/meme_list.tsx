@@ -1,7 +1,8 @@
 import axios,{AxiosResponse} from 'axios';
 import React, { useEffect, useState } from 'react';
-import './App.css';
 import './Meme.css';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 type meme = {
   box_count: number
@@ -31,7 +32,7 @@ function Meme_list() {
   },[]);
 
   useEffect(()=>{
-    console.log(left);
+    
   },[left])
 
   const testAPI = async (): Promise<any> => {
@@ -41,20 +42,51 @@ function Meme_list() {
       
   };
 
+  function decrease_left(){
+    if(left>-9500){
+      setLeft(left-500);
+    }
+  }
+
+  function increase_left(){
+    if(left<0){
+      if(left>-500){
+        setLeft(0);
+      }
+      setLeft(left+500);
+    }
+  }
+
 
   return (
-    <div className='scroll_box'>
-
-    <div className='meme_list' style={{left:`${left}px`}}>
-        {memes.map((val)=>{
-          return (
-            <div className='sm_meme_box'>
-              <img className='sm_meme' src={val.url+''} ></img>
-            </div>
-          )
-        })}
+    <>
+      <div>
+        
       </div>
-    </div>
+      <div className='flex'>
+        <div className='btn_box'>
+          {left<0 && 
+            <ArrowLeftIcon sx={{ fontSize: 90 }} onClick={increase_left} ></ArrowLeftIcon>
+          }
+        </div>
+        <div className='scroll_box' id='scroll_box'>
+          <div className='meme_list' style={{left:`${left}px`}}>
+              {memes.map((val)=>{
+                return (
+                  <div className='sm_meme_box'>
+                    <img className='sm_meme' src={val.url+''} ></img>
+                  </div>
+                )
+              })}
+          </div>
+        </div>
+        <div className='btn_box'>
+          { left>-9500 &&
+            <ArrowRightIcon sx={{ fontSize: 90 }} onClick={decrease_left} ></ArrowRightIcon>
+          }
+        </div>
+      </div>
+    </>
   );
 }
 

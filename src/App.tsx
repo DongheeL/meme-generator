@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Meme_list from './meme_list'
+import Meme_gen from './meme_gen'
 
 function App() {
   return (
@@ -9,8 +9,8 @@ function App() {
       <header className="App-header">
         Meme_Generator
       </header>
-      <div>
-      <Meme_list />
+      <div style={{margin:'10px'}}>
+        <Meme_gen />
       </div>
     </div>
   );

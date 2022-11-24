@@ -14,7 +14,11 @@ type meme = {
 };
 type ITestInterface = {success:boolean, data:{memes:meme[]}} | undefined;
 
-function Meme_list() {
+interface IProps{
+  setImage:(img:meme)=>void
+}
+
+function Meme_list({setImage}:IProps){
   
   const [memes,setMemes] = useState<meme[]>([]);
   const [left,setLeft] = useState<number>(0);
@@ -60,31 +64,26 @@ function Meme_list() {
 
   return (
     <>
-      <div>
-        
+      <div className='btn_box'>
+        {left<0 && 
+          <ArrowLeftIcon sx={{ fontSize: 90 }} onClick={increase_left} ></ArrowLeftIcon>
+        }
       </div>
-      <div className='flex'>
-        <div className='btn_box'>
-          {left<0 && 
-            <ArrowLeftIcon sx={{ fontSize: 90 }} onClick={increase_left} ></ArrowLeftIcon>
-          }
+      <div className='scroll_box' id='scroll_box'>
+        <div className='meme_list' style={{left:`${left}px`}}>
+            {memes.map((val)=>{
+              return (
+                <div className='sm_meme_box'>
+                  <img className='sm_meme' src={val.url+''} onClick={()=>setImage(val)} ></img>
+                </div>
+              )
+            })}
         </div>
-        <div className='scroll_box' id='scroll_box'>
-          <div className='meme_list' style={{left:`${left}px`}}>
-              {memes.map((val)=>{
-                return (
-                  <div className='sm_meme_box'>
-                    <img className='sm_meme' src={val.url+''} ></img>
-                  </div>
-                )
-              })}
-          </div>
-        </div>
-        <div className='btn_box'>
-          { left>-9500 &&
-            <ArrowRightIcon sx={{ fontSize: 90 }} onClick={decrease_left} ></ArrowRightIcon>
-          }
-        </div>
+      </div>
+      <div className='btn_box'>
+        { left>-9500 &&
+          <ArrowRightIcon sx={{ fontSize: 90 }} onClick={decrease_left} ></ArrowRightIcon>
+        }
       </div>
     </>
   );

@@ -21,6 +21,17 @@ function Meme_gen() {
     setImage(img);
   }
 
+  useEffect(()=>{
+
+  }, [image])
+
+  // const memeAPI = async (): Promise<any> => {
+  //   return axios({
+  //     url:`https://api.imgflip.com/caption_image`,
+  //   })
+    
+  // };
+
   return (
     <>
     <div className='flex'>

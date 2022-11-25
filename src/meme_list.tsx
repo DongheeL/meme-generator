@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './Meme.css';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import { IconButton } from '@mui/material';
 
 type meme = {
   box_count: number
@@ -47,17 +48,17 @@ function Meme_list({setImage}:IProps){
   };
 
   function decrease_left(){
-    if(left>-9500){
-      setLeft(left-500);
+    if(left>-7600){
+      setLeft(left-(5*80));
     }
   }
 
   function increase_left(){
     if(left<0){
-      if(left>-500){
+      if(left>-400){
         setLeft(0);
       }
-      setLeft(left+500);
+      setLeft(left+(5*80));
     }
   }
 
@@ -66,7 +67,9 @@ function Meme_list({setImage}:IProps){
     <>
       <div className='btn_box'>
         {left<0 && 
-          <ArrowLeftIcon sx={{ fontSize: 90 }} onClick={increase_left} ></ArrowLeftIcon>
+        <IconButton style={{padding:'8px 0px'}} >
+          <ArrowLeftIcon sx={{ fontSize: 60 }} onClick={increase_left} ></ArrowLeftIcon>
+        </IconButton>
         }
       </div>
       <div className='scroll_box' id='scroll_box'>
@@ -81,8 +84,10 @@ function Meme_list({setImage}:IProps){
         </div>
       </div>
       <div className='btn_box'>
-        { left>-9500 &&
-          <ArrowRightIcon sx={{ fontSize: 90 }} onClick={decrease_left} ></ArrowRightIcon>
+        { left>-7600 &&
+        <IconButton style={{padding:'8px 0px'}}  >
+          <ArrowRightIcon sx={{ fontSize: 60 }} onClick={decrease_left} ></ArrowRightIcon>
+        </IconButton>
         }
       </div>
     </>

@@ -1,5 +1,7 @@
+import { TextField } from '@mui/material';
 import axios,{AxiosResponse} from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
+import { setTextRange } from 'typescript';
 import './Meme.css';
 import Meme_list from './meme_list';
 
@@ -16,6 +18,7 @@ type meme = {
 function Meme_gen() {
 
   const [image,setImage] = useState<meme|null>(null);
+  const [text,setText] = useState('');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -36,8 +39,34 @@ function Meme_gen() {
         ctx?.drawImage(image,0,0,canvas?.width,canvas?.height)
       }
     }
-
   }, [image])
+
+  useEffect(()=>{
+    console.log(text);
+    //canvas에 이미지 추가 
+    // const canvas = canvasRef.current;
+    // const ctx = canvas?.getContext("2d");
+    // // ctx.tex
+    // if(ctx!=null){
+    //   // ctx?.clearRect(0,0, canvas?.width, canvas?.height);
+    //   ctx.font="bold 60px sans-serif";
+    //   ctx?.fillText(text,10,60);
+    // }
+  }, [text])
+
+  function showText(){
+    //canvas에 이미지 추가 
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    // ctx.tex
+    if(ctx!=null){
+      // ctx?.clearRect(0,0, canvas?.width, canvas?.height);
+      ctx.font="bold 60px sans-serif";
+      ctx?.fillText(text,10,60);
+    }
+  }
+
+
 
 
   return (
@@ -49,8 +78,12 @@ function Meme_gen() {
           <img className='meme' ref={imageRef} src={image.url+''} hidden={true} ></img>
         }
       </div>
-      <div className='flex'>
+      <div >
         <Meme_list setImage={getImage}/>
+        <div>
+          <input onKeyDown={(event)=>{if(event.key=='Enter'){showText()}}} onChange={(event)=>{setText(event?.target.value)}} ></input>
+          {/* <TextField onKeyPress={()=>{}} onChange={(event)=>{setText(event?.target.value)}} ></TextField> */}
+        </div>
       </div>
     </div>
     </>

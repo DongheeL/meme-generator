@@ -65,6 +65,7 @@ function Meme_list({setImage}:IProps){
 
   return (
     <>
+    <div className='flex'>
       <div className='btn_box'>
         {left<0 && 
         <IconButton style={{padding:'8px 0px'}} >
@@ -89,6 +90,7 @@ function Meme_list({setImage}:IProps){
           <ArrowRightIcon sx={{ fontSize: 60 }} onClick={decrease_left} ></ArrowRightIcon>
         </IconButton>
         }
+      </div>
       </div>
     </>
   );

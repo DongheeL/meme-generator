@@ -1,6 +1,7 @@
 import { TextField } from '@mui/material';
 import axios,{AxiosResponse} from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
+import Draggable, {DraggableCore, DraggableData, DraggableEvent} from 'react-draggable';
 import { setTextRange } from 'typescript';
 import './Meme.css';
 import Meme_list from './meme_list';
@@ -66,6 +67,23 @@ function Meme_gen() {
     }
   }
 
+  function eventHandler_onDrag(e:DraggableEvent, data:DraggableData){
+    console.log('Event Type', e.type);
+    console.log({e, data});
+  }
+  function eventHandler_onStart(e:DraggableEvent, data:DraggableData){
+    console.log('Event Type', e.type);
+    console.log({e, data});
+  }
+  function eventHandler_onStop(e:DraggableEvent, data:DraggableData){
+    console.log('Event Type', e.type);
+    console.log({e, data});
+  }
+  function onMouseDown(e:MouseEvent){
+    console.log('Event Type', e.type);
+    console.log({e});
+  }
+
 
 
 
@@ -73,9 +91,22 @@ function Meme_gen() {
     <>
     <div className='flex'>
       <div className='meme_gen_box'>
-        <canvas className='canvas' ref={canvasRef} width={2000} height={2000} ></canvas>
+        {/* <canvas className='canvas' ref={canvasRef} width={2000} height={2000} ></canvas> */}
         { image != null && 
-          <img className='meme' ref={imageRef} src={image.url+''} hidden={true} ></img>
+        <>
+          <img className='meme' ref={imageRef} src={image.url+''}  ></img>
+          <Draggable
+            onStart={(e:DraggableEvent, data:DraggableData)=>eventHandler_onStart(e, data)}
+            onDrag={(e:DraggableEvent, data:DraggableData)=>eventHandler_onDrag(e, data)}
+            onStop={(e:DraggableEvent, data:DraggableData)=>eventHandler_onStop(e, data)}
+            onMouseDown={(e:MouseEvent)=>onMouseDown(e)}
+            defaultPosition={{x: 0, y: 0}}
+          >
+            <div>
+              draggable div
+            </div>
+          </Draggable>
+        </>
         }
       </div>
       <div >

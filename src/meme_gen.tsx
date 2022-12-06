@@ -21,6 +21,7 @@ function Meme_gen() {
   const [image,setImage] = useState<meme|null>(null);
   const [text,setText] = useState('');
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
 
@@ -31,15 +32,18 @@ function Meme_gen() {
 
   useEffect(()=>{
     //canvas에 이미지 추가 
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if(canvas!=null){
-      ctx?.clearRect(0,0, canvas?.width, canvas?.height);
-      const image = imageRef.current;
-      if(image!=null){
-        ctx?.drawImage(image,0,0,canvas?.width,canvas?.height)
-      }
-    }
+    // const canvas = canvasRef.current;
+    // const ctx = canvas?.getContext("2d");
+    // if(canvas!=null){
+    //   ctx?.clearRect(0,0, canvas?.width, canvas?.height);
+    //   const image = imageRef.current;
+    //   if(image!=null){
+    //     ctx?.drawImage(image,0,0,canvas?.width,canvas?.height)
+    //   }
+    // }
+    const div = divRef.current;
+    console.log(div?.offsetLeft, div?.scrollTop, div?.scrollWidth, div?.scrollHeight)
+
   }, [image])
 
   useEffect(()=>{
@@ -90,22 +94,25 @@ function Meme_gen() {
   return (
     <>
     <div className='flex'>
-      <div className='meme_gen_box'>
+      <div className='meme_gen_box' ref={divRef}>
         {/* <canvas className='canvas' ref={canvasRef} width={2000} height={2000} ></canvas> */}
         { image != null && 
         <>
           <img className='meme' ref={imageRef} src={image.url+''}  ></img>
-          <Draggable
-            onStart={(e:DraggableEvent, data:DraggableData)=>eventHandler_onStart(e, data)}
-            onDrag={(e:DraggableEvent, data:DraggableData)=>eventHandler_onDrag(e, data)}
-            onStop={(e:DraggableEvent, data:DraggableData)=>eventHandler_onStop(e, data)}
-            onMouseDown={(e:MouseEvent)=>onMouseDown(e)}
-            defaultPosition={{x: 0, y: 0}}
-          >
-            <div>
-              draggable div
-            </div>
-          </Draggable>
+          <div style={{position:'absolute', border:'1px solid black', top: '0px',left: '0px', width: '700px', height: '700px'}}>
+            <Draggable
+              onStart={(e:DraggableEvent, data:DraggableData)=>eventHandler_onStart(e, data)}
+              onDrag={(e:DraggableEvent, data:DraggableData)=>eventHandler_onDrag(e, data)}
+              onStop={(e:DraggableEvent, data:DraggableData)=>eventHandler_onStop(e, data)}
+              onMouseDown={(e:MouseEvent)=>onMouseDown(e)}
+              bounds={{ left:0, top:0, bottom:700, right:700}}
+              // defaultPosition={{x:0, y:0}}
+              >
+              <div>
+                draggable div
+              </div>
+            </Draggable>
+          </div>
         </>
         }
       </div>
